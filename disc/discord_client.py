@@ -12,15 +12,18 @@ def is_text_or_voice(channel):
 
 class DiscClient(Client):
 
-    def __init__(self, guild):
+    def __init__(self, guild, max_messages):
         super(DiscClient, self).__init__()
 
         self.guild = guild
+        self.max_messages = max_messages
+
         self.graph = SocialInteractionGraph(
             name=guild,
             weights={
                 InteractionType.MESSAGE_REPLY: 1,
                 InteractionType.MESSAGE_REACTION: 1,
+                InteractionType.MESSAGE_MENTION: 1
             },
             half_life=172800
         )
@@ -41,7 +44,7 @@ class DiscClient(Client):
             if not (permissions.read_message_history and permissions.read_messages):
                 continue
 
-            async for message in channel.history(limit=10):
+            async for message in channel.history(limit=self.max_messages):
                 await self.process_message(message)
 
         click.echo(f'Complete! Edges: {self.graph.graph.number_of_edges()}, Vertices: {self.graph.graph.number_of_nodes()}')
@@ -55,9 +58,20 @@ class DiscClient(Client):
             return
         
         await self.process_message_reference(message)
+        await self.process_message_mentions(message)
         await self.process_message_reactions(message)
 
     
+    async def process_message_mentions(self, message):
+        for user in message.mentions:
+            self.graph.add_interaction(Interaction(
+                user1=message.author,
+                user2=referenced_message.author,
+                type=InteractionType.MESSAGE_MENTION,
+                recorded_at=message.created_at
+            ))
+
+
     async def process_message_reference(self, message):
         if not message.reference:
             return

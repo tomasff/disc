@@ -6,6 +6,7 @@ import networkx as nx
 class InteractionType(enum.Enum):
     MESSAGE_REACTION = 0
     MESSAGE_REPLY = 1
+    MESSAGE_MENTION = 2
 
 
 class Interaction:
@@ -39,6 +40,11 @@ class SocialInteractionGraph:
 
     def add_interaction(self, interaction):
         user1, user2 = interaction.user1, interaction.user2
+
+        weight = self._calc_edge_weight(interaction)
+
+        if weight == 0:
+            return
 
         self.graph.add_node(user1)
         self.graph.add_node(user2)

@@ -23,7 +23,7 @@ class Interaction:
 
 
 class SocialInteractionGraph:
-    def __init__(self, name, weights, half_life=60):
+    def __init__(self, name, weights, half_life=172800):
         self.name = name
         self.t_now = datetime.now()
         self.weights = weights

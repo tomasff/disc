@@ -11,7 +11,7 @@ def is_text_or_voice(channel):
 
 
 class DiscClient(Client):
-    def __init__(self, guild, max_messages):
+    def __init__(self, guild, max_messages, half_life):
         super(DiscClient, self).__init__()
 
         self.guild = guild
@@ -24,7 +24,7 @@ class DiscClient(Client):
                 InteractionType.MESSAGE_REACTION: 1,
                 InteractionType.MESSAGE_MENTION: 1,
             },
-            half_life=172800,
+            half_life=half_life,
         )
 
     async def on_ready(self):

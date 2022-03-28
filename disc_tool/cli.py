@@ -46,8 +46,8 @@ def build(token, guild, max_messages, half_life, weight, name):
     client.run(token)
 
     click.echo(
-        f"Complete! Edges: {graph.number_of_edges()}, "
-        f"Vertices: {graph.number_of_nodes()}"
+        f"Complete! Edges: {graph.edges}, "
+        f"Vertices: {graph.nodes}"
     )
 
     graph.save()

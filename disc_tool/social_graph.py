@@ -56,5 +56,13 @@ class SocialInteractionGraph:
 
         self.graph[user1][user2]["weight"] += self._calc_edge_weight(interaction)
 
+    @property
+    def edges(self):
+        return self.graph.number_of_edges()
+
+    @property
+    def nodes(self):
+        return self.graph.number_of_nodes()
+
     def save(self):
         nx.write_gexf(self.graph, f"{self.name}.gexf")

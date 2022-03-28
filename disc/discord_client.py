@@ -2,7 +2,7 @@ import click
 import matplotlib.pyplot as plt
 
 from tqdm import tqdm
-from discord import Client, ChannelType, MessageType, NotFound
+from discord import Client, ChannelType, MessageType, NotFound, Forbidden
 from .social_graph import SocialInteractionGraph, InteractionType, Interaction
 
 
@@ -102,7 +102,7 @@ class DiscClient(Client):
         try:
             referenced_channel = await self.fetch_channel(reference.channel_id)
             return await referenced_channel.fetch_message(reference.message_id)
-        except NotFound:
+        except (NotFound, Forbidden):
             return None
 
     async def process_message_reactions(self, message):

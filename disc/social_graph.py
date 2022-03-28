@@ -1,13 +1,14 @@
-from enum import Enum
+from enum import Enum, unique, auto
 from datetime import datetime
 
 import networkx as nx
 
 
+@unique
 class InteractionType(Enum):
-    MESSAGE_REACTION = 0
-    MESSAGE_REPLY = 1
-    MESSAGE_MENTION = 2
+    MESSAGE_REACTION = auto()
+    MESSAGE_REPLY = auto()
+    MESSAGE_MENTION = auto()
 
 
 class Interaction:

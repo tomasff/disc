@@ -11,7 +11,7 @@ def is_text_or_voice(channel):
 
 
 class DiscClient(Client):
-    def __init__(self, guild, max_messages, half_life):
+    def __init__(self, guild, max_messages, half_life, weights):
         super(DiscClient, self).__init__()
 
         self.guild = guild
@@ -19,11 +19,7 @@ class DiscClient(Client):
 
         self.graph = SocialInteractionGraph(
             name=guild,
-            weights={
-                InteractionType.MESSAGE_REPLY: 1,
-                InteractionType.MESSAGE_REACTION: 1,
-                InteractionType.MESSAGE_MENTION: 1,
-            },
+            weights=weights,
             half_life=half_life,
         )
 

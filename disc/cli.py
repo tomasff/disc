@@ -1,5 +1,10 @@
 import click
+
+from .social_graph import InteractionType
 from .discord_client import DiscClient
+
+INTERACTION_CHOICES = InteractionType.__members__
+DEFAULT_WEIGHTS = {type: 1 for type in InteractionType.__members__}
 
 
 @click.command()
@@ -12,6 +17,7 @@ from .discord_client import DiscClient
     "--half-life",
     type=int,
     help="Half-life to be used to calculate the edges' weight",
+    default=172800,
 )
 @click.option(
     "--max-messages",
@@ -19,11 +25,19 @@ from .discord_client import DiscClient
     type=int,
     help="Maximum number of messages to be fetched per guild channel",
 )
-def build(token, guild, max_messages, half_life, name):
+@click.option(
+    "--weight",
+    "-w",
+    nargs=2,
+    type=click.Tuple([click.Choice(INTERACTION_CHOICES), float]),
+    multiple=True,
+    help="Configures the weight for a given interaction",
+)
+def build(token, guild, max_messages, half_life, weight, name):
+    weights = DEFAULT_WEIGHTS | dict(weight)
+
     client = DiscClient(
-        guild=guild,
-        max_messages=max_messages,
-        half_life=half_life
+        guild=guild, max_messages=max_messages, half_life=half_life, weights=weights
     )
 
     client.run(token)

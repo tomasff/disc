@@ -56,12 +56,5 @@ class SocialInteractionGraph:
 
         self.graph[user1][user2]["weight"] += self._calc_edge_weight(interaction)
 
-    def draw(self):
-        layout = nx.spring_layout(self.graph)
-        labels = nx.get_edge_attributes(self.graph, "weight")
-
-        nx.draw_networkx(self.graph, layout)
-        nx.draw_networkx_edge_labels(self.graph, layout, edge_labels=labels)
-
     def save(self):
         nx.write_gexf(self.graph, f"{self.name}.gexf")

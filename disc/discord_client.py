@@ -11,17 +11,12 @@ def is_text_or_voice(channel):
 
 
 class DiscClient(Client):
-    def __init__(self, guild, max_messages, half_life, weights):
+    def __init__(self, guild, max_messages, graph):
         super(DiscClient, self).__init__()
 
         self.guild = guild
+        self.graph = graph
         self.max_messages = max_messages
-
-        self.graph = SocialInteractionGraph(
-            name=guild,
-            weights=weights,
-            half_life=half_life,
-        )
 
     async def on_ready(self):
         guild = self.get_guild(self.guild)

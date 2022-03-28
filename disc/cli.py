@@ -1,6 +1,6 @@
 import click
 
-from .social_graph import InteractionType
+from .social_graph import SocialInteractionGraph, InteractionType
 from .discord_client import DiscClient
 
 INTERACTION_CHOICES = InteractionType.__members__
@@ -36,8 +36,12 @@ DEFAULT_WEIGHTS = {type: 1 for type in InteractionType.__members__}
 def build(token, guild, max_messages, half_life, weight, name):
     weights = DEFAULT_WEIGHTS | dict(weight)
 
-    client = DiscClient(
-        guild=guild, max_messages=max_messages, half_life=half_life, weights=weights
+    graph = SocialInteractionGraph(
+        name=name,
+        weights=weights,
+        half_life=half_life,
     )
+
+    client = DiscClient(guild=guild, max_messages=max_messages, graph=graph)
 
     client.run(token)

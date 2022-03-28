@@ -64,9 +64,12 @@ class DiscClient(Client):
     
     async def process_message_mentions(self, message):
         for user in message.mentions:
+            if user == message.author:
+                continue
+
             self.graph.add_interaction(Interaction(
                 user1=message.author,
-                user2=referenced_message.author,
+                user2=user,
                 type=InteractionType.MESSAGE_MENTION,
                 recorded_at=message.created_at
             ))

@@ -1,5 +1,4 @@
 import click
-import matplotlib.pyplot as plt
 
 from tqdm import tqdm
 from discord import Client, ChannelType, MessageType, NotFound, Forbidden
@@ -36,12 +35,6 @@ class DiscClient(Client):
             async for message in channel.history(limit=self.max_messages):
                 await self.process_message(message)
 
-        click.echo(
-            f"Complete! Edges: {self.graph.graph.number_of_edges()}, \
-                    Vertices: {self.graph.graph.number_of_nodes()}"
-        )
-
-        self.graph.save()
         await self.close()
 
     async def process_message(self, message):

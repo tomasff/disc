@@ -43,5 +43,11 @@ def build(token, guild, max_messages, half_life, weight, name):
     )
 
     client = DiscClient(guild=guild, max_messages=max_messages, graph=graph)
-
     client.run(token)
+
+    click.echo(
+        f"Complete! Edges: {graph.number_of_edges()}, "
+        f"Vertices: {graph.number_of_nodes()}"
+    )
+
+    graph.save()

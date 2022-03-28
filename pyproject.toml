@@ -3,6 +3,9 @@ name = "disc"
 version = "0.1.0"
 description = "A tool to build Discord implicit social graphs"
 authors = ["Tomás F. <contact@tomff.com>"]
+homepage = "https://github.com/tomasff/disc"
+repository = "https://github.com/tomasff/disc"
+readme = "README.md"
 license = "MIT"
 
 [tool.poetry.dependencies]

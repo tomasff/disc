@@ -64,4 +64,4 @@ class SocialInteractionGraph:
         nx.draw_networkx_edge_labels(self.graph, layout, edge_labels=labels)
 
     def save(self):
-        nx.write_graphml_lxml(self.graph, f"{self.name}.graphml")
+        nx.write_gexf(self.graph, f"{self.name}.gexf")

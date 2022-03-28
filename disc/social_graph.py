@@ -36,7 +36,7 @@ class SocialInteractionGraph:
         )
 
     def _calc_edge_weight(self, interaction):
-        return self.weights[interaction.type] * interaction.weight(
+        return self.weights[interaction.type.name] * interaction.weight(
             self.t_now, self.half_life
         )
 
